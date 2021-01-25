@@ -1,0 +1,7 @@
+{
+    "token": "insert-your-bot-token-here",
+    "owners": "owner-id-only",
+    "logging": "logging-channel-for-server-joins",
+    "prefix": ";",
+    "activity": "games!"
+}
