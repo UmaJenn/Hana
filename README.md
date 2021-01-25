@@ -6,10 +6,7 @@ Hana is an invite checking bot for apms to be utilized to check for invalid invi
 Check out the newest version of Sakura that Flare has coded [here](https://github.com/Chiitoi/Sakura/)!
 
 # Features
-・Checks for valid/invalid invites and shows the total results at the end
-・Able to see how many valid/invalid invites are in the channel
-・Simple Commands to follow 
-・Self host it yourself by cloning it locally or anywhere else that works, really
+・Checks for valid/invalid invites and shows the total results at the end\n・Able to see how many valid/invalid invites are in the channel\n・Simple Commands to follow \n・Self host it yourself by cloning it locally or anywhere else that works, really
 
 # Instructions
 For installation, configuration, usage and other information, please visit the wiki. 
