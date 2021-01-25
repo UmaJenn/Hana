@@ -4,7 +4,7 @@ import asyncio
 import time
 import os
 from discord import CategoryChannel
-from discord.ext import commands, flags
+from discord.ext import commands
 from datetime import date
 import string
 import json
