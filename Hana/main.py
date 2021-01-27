@@ -802,7 +802,7 @@ async def help(ctx,cmd = None):
                 description=f"Here's the list of available commands. For more specific and detailed help for each commands, use `{prefix}help [command]` like `{prefix}help check`.\nBot prefix: `{prefix}`, <@{client.user.id}>\n\nAvailable Commands: 14",
                 colour=0xfffafa,
             )
-            embed.add_field(name="Owner",value=f"・`server` - Modifies servers allowed to use {client.user.name}\n・`guilds` - Guilds that {client.user.name} is in (total)\n・`leaveme` - Leave the guild with the guild id",inline=False)
+            embed.add_field(name="Owner",value=f"・`server` - Modifies servers allowed to use {client.user.name}\n・`guilds` - Guilds that {client.user.name} is in (total)\n・`leaveme` - Leave the guild with the guild id\n・`invid` - Shows you the server id of the invite provided",inline=False)
             embed.add_field(name="Admin",value="・`bots` - Modifies the bot channel list\n・`ignore` - Modifies the channel blacklist\n・`category` - Modifies the category whitelist\n・`ids` - Displays a list of all category IDs in a server\n・`checkchannel` - Modifies the invite check channel\n・`embed` - A guide on an Embed Creator",inline=False)
             embed.add_field(name="Invites",value="・`check` - Checks invites from provided category",inline=False)
             embed.add_field(name="Utility",value=f"・`prefix` - Shows you the bot's current prefix\n・`guide` - A guide to {client.user.name}\n・`help` - Displays all available commands\n・`ping` - Checks server latency\n・`stats` - Displays bot information",inline=False)
@@ -920,6 +920,16 @@ async def help(ctx,cmd = None):
             embed.add_field(name="Description",value="A guide on an Embed Creator",inline=False)
             embed.add_field(name="Usage",value=f"Fill in wanted information in the destined boxes, and copy the code part behind ```_embed #channel```. Then {prefix}embed [code].",inline=False)
             embed.add_field(name="Aliases",value=f"`{prefix}embed`",inline=False)
+            await ctx.send(embed=embed)
+        elif cmd == "invid":
+            embed = discord.Embed(
+                title=f"The {cmd} command",
+                colour=0xfffafa
+            )
+            embed.add_field(name="Category",value="Owner",inline=False)
+            embed.add_field(name="Description",value="Shows you the server id of the invite provided",inline=False)
+            embed.add_field(name="Usage",value=f"`{prefix}invid [invite]`",inline=False)
+            embed.add_field(name="Aliases",value=f"`{prefix}invid`",inline=False)
             await ctx.send(embed=embed)
         else:
             embed=discord.Embed(
