@@ -1,8 +1,8 @@
 {
-    "token": "Nzg0MjEwMTk1NjUxMTAwNzQz.X8l-qA.tIl6uDTbSR2jkDqz7AaaMC8uOfA",
-    "owners": "711482369110179863",
-    "logging": "786755459457089587",
-    "server": "780273853749657600",
+    "token": "insert-your-bot-token-here",
+    "owners": "owner-id-only",
+    "logging": "logging-channel-for-server-joins",
+    "server": "insert-your-main-server-id",
     "prefix": ";",
     "activity": "games!"
 }
