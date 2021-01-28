@@ -1,3 +1,6 @@
+# Note
+This ain't no done. I'm still editing some things. 
+
 # Hana
 An invite checking bot for apms!
 
