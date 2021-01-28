@@ -3,24 +3,20 @@ import random
 import asyncio
 import time
 import os
+from dotenv import load_dotenv
 from discord import CategoryChannel
 from discord.ext import commands
 from datetime import date
 import string
 import json
 
-def config(filename: str = "config"):
-    """ Fetch default config file """
-    try:
-        with open(f"config.json", encoding='utf8') as data:
-            return json.load(data)
-    except FileNotFoundError:
-        raise FileNotFoundError("JSON file wasn't found")
-    
-config = config()
+load_dotenv()
+
+token = os.getenv("DISCORD_TOKEN")
 chars = string.ascii_letters + string.digits + './'
 intents = discord.Intents.all()
-client = commands.Bot(command_prefix=commands.when_mentioned_or(config["prefix"]),intents=intents)
+prefix = os.getenv("PREFIX")
+client = commands.Bot(command_prefix=commands.when_mentioned_or(prefix),intents=intents)
 client.remove_command('help')
 
 from Cogs import timeup
@@ -30,12 +26,11 @@ client.add_cog(embed.Embed(client))
 
 today = date.today()
 d2 = today.strftime("%b %d, %Y")
-pre = config["prefix"]
-act = config["activity"]
+act = os.getenv("ACTIVITY")
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name=f"{act} | {pre}guide"))
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name=f"{act} | {prefix}guide"))
     print('Logged in as')
     print(client.user)
     print(client.user.id)
@@ -48,7 +43,7 @@ async def on_command_error(ctx,error):
 @client.event
 async def on_message(message):
     guild_ids = open('servers.txt').read().split('\n')
-    main_server = config["server"]
+    main_server = os.getenv("SERVER")
     if message.author == client.user:
         return
     if message.author.bot == True:
@@ -67,7 +62,8 @@ async def on_message(message):
 
 @client.event
 async def on_guild_join(guild):
-    audit_channel = await client.fetch_channel(config["logging"])
+    logging = os.getenv("LOGGING")
+    audit_channel = await client.fetch_channel(logging)
     embed = discord.Embed(title='Server added', type='rich', color=0x2ecc71) #Green
     embed.set_thumbnail(url=guild.icon_url)
     embed.add_field(name='Name', value=guild.name, inline=True)
@@ -80,7 +76,8 @@ async def on_guild_join(guild):
 
 @client.event
 async def on_guild_remove(guild):
-    audit_channel = await client.fetch_channel(config["logging"])
+    logging = os.getenv("LOGGING")
+    audit_channel = await client.fetch_channel(logging)
     embed = discord.Embed(title='Server removed', type='rich', color=0xe74c3c) #Red
     embed.set_thumbnail(url=guild.icon_url)
     embed.add_field(name='Name', value=guild.name, inline=True)
@@ -94,8 +91,8 @@ async def on_guild_remove(guild):
 
 @client.command()
 async def leaveme(ctx,server_name=None):
-    owners = config["owners"]
-    main_server = config["server"]
+    owners = os.getenv("OWNERS")
+    main_server = os.getenv("SERVER")
     if str(ctx.author.id) in owners:    
         try:
             if server_name is None:
@@ -271,8 +268,9 @@ async def check(ctx):
             )
             await ctx.send(embed=embed)
     else:
+        prefix = os.getenv("PREFIX")
         embed=discord.Embed(
-            description="This server didn't register a channel. Run `::checkchannel <#channel>` to add a channel for invite checking.",
+            description=f"This server didn't register a channel. Run `{prefix}checkchannel <#channel>` to add a channel for invite checking.",
             color=0xd80000,
         )
         await ctx.send(embed=embed)
@@ -583,7 +581,7 @@ async def ids(ctx):
 
 @client.command()
 async def server(ctx, cmd, guild = None):
-    owners = config["owners"]
+    owners = os.getenv("OWNERS")
     if str(ctx.author.id) in owners:
         fn = "servers.txt"
         
@@ -691,7 +689,7 @@ async def server_error(ctx,error):
 
 @client.command()
 async def guilds(ctx):
-    owners = config["owners"]
+    owners = os.getenv("OWNERS")
     if str(ctx.author.id) in owners:
         async with ctx.typing():
             await asyncio.sleep(1)
@@ -710,8 +708,9 @@ async def guilds(ctx):
 
 @client.command()
 async def checkinvites(ctx):
+    prefix = os.getenv("PREFIX")
     embed=discord.Embed(
-        description="Try running `::check` instead!",
+        description=f"Try running `{prefix}check` instead!",
         colour=0x2f3136
     )
     await ctx.send(embed=embed)
@@ -719,7 +718,7 @@ async def checkinvites(ctx):
 @client.command()
 @commands.guild_only()
 async def prefix(ctx):
-    prefix = config["prefix"]
+    prefix = os.getenv("PREFIX")
     embed=discord.Embed(
         description=f"Current prefix is `{prefix}`",
         colour=0xfffafa
@@ -728,7 +727,7 @@ async def prefix(ctx):
 
 @client.command()
 async def invid(ctx, invite: discord.Invite):
-    owners = config["owners"]
+    owners = os.getenv("OWNERS")
     if str(ctx.author.id) in owners:
         invite = await client.fetch_invite(invite)
         guild = invite.guild
@@ -763,8 +762,8 @@ async def invid_error(ctx, error):
 
 @client.command()
 async def help(ctx,cmd = None):
-    owners = config["owners"]
-    prefix = config["prefix"] #{prefix}
+    owners = os.getenv("OWNERS")
+    prefix = os.getenv("PREFIX") #{prefix}
     if str(ctx.author.id) in owners:
         if cmd == "server":
             embed=discord.Embed(
@@ -895,8 +894,8 @@ async def help(ctx,cmd = None):
             )
             embed.add_field(name="Category",value="Utility",inline=False)
             embed.add_field(name="Description",value="Checks server latency",inline=False)
-            embed.add_field(name="Usage",value="`::ping`",inline=False)
-            embed.add_field(name="Aliases",value="`::ping`",inline=False)
+            embed.add_field(name="Usage",value=f"`{prefix}ping`",inline=False)
+            embed.add_field(name="Aliases",value=f"`{prefix}ping`",inline=False)
             await ctx.send(embed=embed)
             
         elif cmd == "stats":
@@ -1071,8 +1070,8 @@ async def help(ctx,cmd = None):
 
 @client.command()
 async def owner(ctx):
-    owners = config["owners"]
-    prefix = config["prefix"] #{prefix}
+    owners = os.getenv("OWNERS")
+    prefix = os.getenv("PREFIX") #{prefix}
     f1=f"The main point to why {client.user.name} has to add servers is to limit the amount of servers using it and to reduce the risk of hitting ratelimit."
     f2=f"Use this account to run `{prefix}server add [serverId]` to add a server so the bot will listen to the commands in the servers you added only. If you don't add in a server and invite it, the bot will not listen to any commands, even if you're an admin."
     f3=f"Get the server's ID using the `{prefix}invid [invite]` to get the server ID of the server invite."
@@ -1096,7 +1095,7 @@ async def owner(ctx):
 
 @client.command()
 async def guide(ctx):
-    prefix = config["prefix"]
+    prefix = os.getenv("PREFIX")
     f1=f'1. By default, {client.user.name} has administrator permissions on its "{client.user.name}" role.'
     f2=f'・To start (if needed), please have an administrator whitelist channels using the `{prefix}bots add <channel>` commands.\n・This is to desinate channels to let users run non-admin commands such as `{prefix}help` and `{prefix}stats`.\n・Administrators can run commands anywhere on the server; however, everyone else can only run commands in __whitelisted__ channels.\n・Please note that both the `{prefix}embed` and `{prefix}check` commands can __only__ be run by administrators.'
     f3=f'1. Set an invite check channel with `{prefix}checkchannel [textChannel]`.\n2. Add the category IDs **(one at a time)** to check invites for using `{prefix}category add [categoryChannelId]`.\n3. Run `{prefix}ids` to see available categories in your portal. \n4. If you have channels that you want to ignore during the invite checks, you can blacklist them using `{prefix}ignore add [#channel]`\n5. Run `{prefix}check` **(in the invite check channel)** and wait a little bit.\n6. __Invite check complete!__'
@@ -1111,4 +1110,4 @@ async def guide(ctx):
     embed.add_field(name="Useful stuff",value=f4,inline=False)
     await ctx.send(embed=embed)
             
-client.run(config["token"])
+client.run(token)
