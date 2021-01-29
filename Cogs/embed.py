@@ -5,7 +5,6 @@ import io
 import re
 import asyncio
 import json
-import ezjson
 import textwrap
 from discord.ext import commands
 from PIL import Image
