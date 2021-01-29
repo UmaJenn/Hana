@@ -9,6 +9,7 @@ from discord.ext import commands
 from datetime import date
 import string
 import json
+import keep_alive
 
 load_dotenv()
 
@@ -1120,4 +1121,5 @@ async def guide(ctx):
     embed.add_field(name="Useful stuff",value=f4,inline=False)
     await ctx.send(embed=embed)
             
+keep_alive.keep_alive()        
 client.run(token)
