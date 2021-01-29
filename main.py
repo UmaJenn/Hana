@@ -1087,7 +1087,7 @@ async def owner(ctx):
     f1=f"The main point to why {client.user.name} has to add servers is to limit the amount of servers using it and to reduce the risk of hitting ratelimit."
     f2=f"Use this account to run `{prefix}server add [serverId]` to add a server so the bot will listen to the commands in the servers you added only. If you don't add in a server and invite it, the bot will not listen to any commands, even if you're an admin."
     f3=f"Get the server's ID using the `{prefix}invid [invite]` to get the server ID of the server invite."
-    f4=f"You can remove servers that are allowed to use the bot using `{prefix}server remove [serverID] and list out the servers that are allowed to use the bot using `{prefix}server list`. If there is a value which states `None (serverid)`, the bot is not in the server as of that time."
+    f4=f"You can remove servers that are allowed to use the bot using `{prefix}server remove [serverID]` and list out the servers that are allowed to use the bot using `{prefix}server list`. If there is a value which states `None (serverid)`, the bot is not in the server as of that time."
     f5=f"You can use `{prefix}guilds` to see the total number of servers the bot is in. Note that this is not the list of servers *allowed* to use the bot, it is just merely a list showing which servers the bot is in. If some servers did not appear in the list when you ran `{prefix}server list`, the bot will not listen to any commands in the servers."
     if str(ctx.author.id) in owners:
         embed=discord.Embed(
