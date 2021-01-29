@@ -1,6 +1,3 @@
-# Note
-This ain't no done. I'm still editing some things. 
-
 # Hana
 An invite checking bot for apms!
 
@@ -15,6 +12,5 @@ Check out the newest version of Sakura that Flare has coded [here](https://githu
 ・Self host it yourself by cloning it locally or anywhere else that works, really  
 
 ## Instructions
-For installation other information, please visit the [SelfHost Guide](https://github.com/UmaJenn/Hana/wiki/Selfhost).  
-For configuration, please visit the [Setting Up Guide](https://github.com/UmaJenn/Hana/wiki/Setting-up).  
-Basic installation will be provided in the discord support server, so please do check it out if you have any enquiries. 
+For installation, configuration, hosting guide and other information, please visit the [SelfHost Guide](https://github.com/UmaJenn/Hana/wiki/Selfhost).  
+Help will be provided in the [discord support server](https://discord.gg/wgQqFs7MR9), so please do check it out if you have any enquiries. 
