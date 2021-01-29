@@ -39,6 +39,7 @@ act = config()["activity"]
 
 @client.event
 async def on_ready():
+    prefix = config()["prefix"]
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name=f"{act} | {prefix}guide"))
     print('Logged in as')
     print(client.user)
